@@ -1,4 +1,5 @@
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
 
 interface Props {
     children: React.ReactNode;
@@ -7,6 +8,7 @@ interface Props {
 const PlatformLayout = ({children}: Props) => {
     return (
         <ClerkProvider>
+            <Toaster />
             {children}
         </ClerkProvider>
     )
