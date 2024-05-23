@@ -6,6 +6,10 @@ import { useEffect, useState } from "react";
 import { ListItem } from "./list-item";
 
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
+import { useAction } from "@/hooks/use-action";
+import { updateListOrder } from "@/actions/update-list-order";
+import { toast } from "sonner";
+import { updateCardOrder } from "@/actions/update-card-order";
 
 function reorder<T>(list: T[], startIndex: number, endIndex: number) {
     const result = Array.from(list);
@@ -26,6 +30,24 @@ export const ListContainer = ({ list, boardId }: Props) => {
     useEffect(() => {
         setOrderedList(list);
     }, [list]);
+
+    const { execute: executeUpdateListOrder } = useAction(updateListOrder, {
+        onSuccess: () => {
+            toast.success("Reordered list")
+        },
+        onError: (error) => {
+            toast.error(error)
+        }
+    })
+
+    const { execute: executeUpdateCardOrder } = useAction(updateCardOrder, {
+        onSuccess: () => {
+            toast.success("Reordered cards")
+        },
+        onError: (error) => {
+            toast.error(error)
+        }
+    })
 
     const onDragEnd = (result: any) => {
         const { destination, source, type } = result;
@@ -49,6 +71,7 @@ export const ListContainer = ({ list, boardId }: Props) => {
             ))
 
             setOrderedList(items);
+            executeUpdateListOrder({ items, boardId })
         }
 
         // moving a card
@@ -80,6 +103,7 @@ export const ListContainer = ({ list, boardId }: Props) => {
                 sourceList.cards = reorderedCards;
 
                 setOrderedList(orderedList);
+                executeUpdateCardOrder({ items: reorderedCards, boardId })
             }
 
             // moving card to another list
@@ -97,6 +121,7 @@ export const ListContainer = ({ list, boardId }: Props) => {
                 });
 
                 setOrderedList(orderedList);
+                executeUpdateCardOrder({ items: destList.cards, boardId })
             }
         }
     }
