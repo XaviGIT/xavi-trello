@@ -16,7 +16,7 @@ const BoardIdPage = async ({ params }: Props) => {
         redirect("/select-org")
     }
 
-    const lists = await db.list.findMany({
+    const list = await db.list.findMany({
         where: {
             boardId: params.boardId,
             board: {
@@ -39,7 +39,7 @@ const BoardIdPage = async ({ params }: Props) => {
         <div className="p-4 h-full overflox-x-auto">
             <ListContainer
                 boardId={params.boardId}
-                lists={lists}
+                list={list}
             />
         </div>
     )
