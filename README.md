@@ -14,6 +14,17 @@ pnpm dev
 bun dev
 ```
 
+Other useful commands:
+
+```bash
+# clear database
+npx prisma migrate reset
+# syncs database with local schema
+npx prisma db push
+# loads schema into local env
+npx prisma generate
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
