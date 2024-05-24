@@ -1,4 +1,4 @@
-### what is this?
+# What is this?
 
 A pet project, similar to Trello, that was used to learn a bit more about Next.js v14
 
